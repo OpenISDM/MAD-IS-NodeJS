@@ -1,0 +1,25 @@
+{
+  "name": "mad-is-nodeis",
+  "version": "1.0.0",
+  "description": "The Interface Server is stand-alone and powerful server, including a web mobile application.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenISDM/MAD-IS-NodeJS.git"
+  },
+  "author": "bookjan",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/OpenISDM/MAD-IS-NodeJS/issues"
+  },
+  "homepage": "https://github.com/OpenISDM/MAD-IS-NodeJS#readme",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-leaflet-directive": "^0.10.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4"
+  }
+}
