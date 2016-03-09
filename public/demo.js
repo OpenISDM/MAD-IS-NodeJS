@@ -12,9 +12,31 @@ var app = angular.module('MAD', [
   'mobile-angular-ui.gestures'
 ]);
 
-app.run(function($transform) {
-  window.$transform = $transform;
-});
+
+// app.run(function($transform) {
+//   window.$transform = $transform;
+// });
+
+app.run(['GetJson', '$rootScope', function(GetJson, $rootScope) {
+  // Get the countries geojson data from a JSON
+  var onSuccess = function(response) {
+    var data = response.data;
+    angular.extend($rootScope, {
+      geojson: {
+        data: data,
+        onEachFeature: function(feature, layer) {
+          var result = '';
+          for (var index in feature.properties) {
+            result = result + index + ':' + feature.properties[index] + '<br>';
+          }
+          layer.bindPopup(result);
+        }
+      }
+    });
+    $rootScope.$emit('$GET_JSON_SUCCESS');
+  };
+  GetJson().then(onSuccess);
+}]);
 
 //
 // You can configure ngRoute as always, but to take advantage of SharedState location
@@ -64,12 +86,18 @@ app.directive('carousel', function() {
   };
 });
 
+app.factory('GetJson', function($http) {
+  return function() {
+    return $http.get('/poi');
+  };
+});
 
 //
 // For this trivial demo we have just a unique MainController
 // for everything
 //
-app.controller('MainController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+app.controller('MainController', ['$rootScope', '$scope', 'GetJson', function($rootScope, $scope, GetJson) {
+
   // Center Map and Zoom
   angular.extend($scope, {
     center: {
@@ -81,48 +109,24 @@ app.controller('MainController', ['$rootScope', '$scope', '$http', function($roo
     }
   });
 
-  // Get the countries geojson data from a JSON
-  $http.get('/poi').success(function(data, status) {
-    angular.extend($scope, {
-      geojson: {
-        data: data,
-        onEachFeature: function(feature, layer) {
-          var result = '';
-          for (var index in feature.properties) {
-            result = result + index + ':' + feature.properties[index] + '<br>';
-          }
-          layer.bindPopup(result);
-        }
-      }
-    });
-  });
-
-  $scope.swiped = function(direction) {
-    alert('Swiped ' + direction);
-  };
-
-  // User agent displayed in home page
-  $scope.userAgent = navigator.userAgent;
-
-  // Needed for the loading screen
-  $rootScope.$on('$routeChangeStart', function() {
-    $rootScope.loading = true;
-  });
-
-  $rootScope.$on('$routeChangeSuccess', function() {
-    $rootScope.loading = false;
-  });
-
   //
   // 'Scroll' screen
-  //
-  var scrollItems = [];
 
-  for (var i = 1; i <= 100; i++) {
-    scrollItems.push('Item ' + i);
-  }
 
-  $scope.scrollItems = scrollItems;
+  $rootScope.$on('$GET_JSON_SUCCESS', function() {
+    console.log($rootScope.geojson.data.features[1].properties.name);
+
+    var scrollItems = [];
+
+    var itemCounts = $rootScope.geojson.data.features.length;
+
+    for (var index in $rootScope.geojson.data.features) {
+      scrollItems.push($rootScope.geojson.data.features[index].properties.name);
+    }
+
+    $scope.scrollItems = scrollItems;
+  });
+
 
   $scope.bottomReached = function() {
     /* global alert: false; */
