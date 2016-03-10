@@ -55,37 +55,6 @@ app.config(function($routeProvider) {
 });
 
 
-//
-// Another `$drag` usage example: this is how you could create
-// a touch enabled "deck of cards" carousel. See `carousel.html` for markup.
-//
-app.directive('carousel', function() {
-  return {
-    restrict: 'C',
-    scope: {},
-    controller: function() {
-      this.itemCount = 0;
-      this.activeItem = null;
-
-      this.addItem = function() {
-        var newId = this.itemCount++;
-        this.activeItem = this.itemCount === 1 ? newId : this.activeItem;
-        return newId;
-      };
-
-      this.next = function() {
-        this.activeItem = this.activeItem || 0;
-        this.activeItem = this.activeItem === this.itemCount - 1 ? 0 : this.activeItem + 1;
-      };
-
-      this.prev = function() {
-        this.activeItem = this.activeItem || 0;
-        this.activeItem = this.activeItem === 0 ? this.itemCount - 1 : this.activeItem - 1;
-      };
-    }
-  };
-});
-
 app.factory('GetJson', function($http) {
   return function() {
     return $http.get('/poi');
@@ -109,21 +78,14 @@ app.controller('MainController', ['$rootScope', '$scope', 'GetJson', function($r
     }
   });
 
-  //
   // 'Scroll' screen
-
-
   $rootScope.$on('$GET_JSON_SUCCESS', function() {
-    console.log($rootScope.geojson.data.features[1].properties.name);
-
     var scrollItems = [];
-
     var itemCounts = $rootScope.geojson.data.features.length;
 
     for (var index in $rootScope.geojson.data.features) {
       scrollItems.push($rootScope.geojson.data.features[index].properties.name);
     }
-
     $scope.scrollItems = scrollItems;
   });
 
