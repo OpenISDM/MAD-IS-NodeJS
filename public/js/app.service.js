@@ -6,6 +6,6 @@
     .factory('GetJson', GetJson);
 
   function GetJson($http) {
-    return $http.get('/poi');
+    return $http.get('/api/poi');
   }
 })();

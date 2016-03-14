@@ -7,11 +7,11 @@
 
   function config($routeProvider) {
     $routeProvider.when('/', {
-      templateUrl: 'map.html',
+      templateUrl: 'map',
       reloadOnSearch: false
     });
     $routeProvider.when('/scroll', {
-      templateUrl: 'scroll.html',
+      templateUrl: 'scroll',
       reloadOnSearch: false
     });
   }

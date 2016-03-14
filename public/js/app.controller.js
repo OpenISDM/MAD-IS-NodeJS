@@ -20,6 +20,7 @@
     // 'Scroll' screen
     $rootScope.$on('$GET_JSON_SUCCESS', function() {
       var scrollItems = [];
+      console.log($rootScope.geojson.data.features);
       var itemCounts = $rootScope.geojson.data.features.length;
 
       for (var index in $rootScope.geojson.data.features) {

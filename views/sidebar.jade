@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	.scrollable
+		h1.scrollable-header.app-name
+			| MAD 
+			small Mobile Assistant for Disaster 1.0
+		.scrollable-content
+			.list-group(ui-turn-off='uiSidebarLeft')
+				a.list-group-item(href='#/')
+					| Map  
+					i.fa.fa-chevron-right.pull-right
+				a.list-group-item(href='#/scroll')
+					| List 
+					i.fa.fa-chevron-right.pull-right
+				// <a class="list-group-item" href="#/scroll">Support Cities <i class="fa fa-chevron-right pull-right"></i></a>
