@@ -9,6 +9,7 @@
     // Get the countries geojson data from a JSON
     var onSuccess = function(response) {
       var data = response.data;
+      console.log(data);
       angular.extend($rootScope, {
         geojson: {
           data: data,

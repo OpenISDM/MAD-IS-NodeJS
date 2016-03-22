@@ -5,22 +5,32 @@
     .module('MAD')
     .controller('MainController', MainController);
 
-  function MainController($rootScope, $scope, GetJson) {
+  function MainController($rootScope, $scope, $location, GetJson) {
     // Center Map and Zoom
     angular.extend($scope, {
       center: {
         autoDiscover: true,
-        zoom: 12
+        zoom: 14
       },
       defaults: {
-        scrollWheelZoom: false
+        scrollWheelZoom: false,
+        markerZoomAnimation: true
       }
     });
+
+    $scope.moveToMarker = function(index) {
+      var coordinates = $rootScope.geojson.data.features[index].geometry.coordinates;
+      var centerHash = coordinates[1] + ":" + coordinates[0] + ":15";
+
+      $location.search({
+        c: centerHash
+      });
+
+    };
 
     // 'Scroll' screen
     $rootScope.$on('$GET_JSON_SUCCESS', function() {
       var scrollItems = [];
-      console.log($rootScope.geojson.data.features);
       var itemCounts = $rootScope.geojson.data.features.length;
 
       for (var index in $rootScope.geojson.data.features) {

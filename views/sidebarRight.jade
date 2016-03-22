@@ -1,17 +1,17 @@
 extends layout
 
 block content
-  .scrollable
-    .scrollable-content
-      .list-group(ui-toggle='uiSidebarRight')
-        a.list-group-item.media(href='', ng-repeat='item in geojson.data.features')
-          .pull-left
-            i.fa.fa-user.chat-user-avatar
-          .media-body
-            h5.media-heading {{item.properties.name}}
-            small(ng-switch='', on='user.online')
-              span(ng-switch-when='true')
-                span.label.label-success {{item.properties.address}}
-              span(ng-switch-default='')
-                span.label.label-default
-                  i default
+	.scrollable
+		.scrollable-content
+			.list-group(ui-toggle='uiSidebarRight')
+				a.list-group-item.media(ng-repeat='item in geojson.data.features', ng-click="moveToMarker($index)")
+					.pull-left
+						i.fa.fa-user.chat-user-avatar
+					.media-body
+						h5.media-heading {{item.properties.name}}
+						small(ng-switch='', on='user.online')
+							span(ng-switch-when='true')
+								span.label.label-success {{item.properties.address}}
+							span(ng-switch-default='')
+								span.label.label-default
+									i default

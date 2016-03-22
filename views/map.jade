@@ -1,4 +1,4 @@
 .scrollable
 	.scrollable-content
-		leaflet(lf-center='center', width='100%', height='100%', geojson='geojson', markers='markers')
-		button(ng-click='center.autoDiscover=true') Discover position
+		leaflet(lf-center='center', url-hash-center="yes", width='100%', height='100%', geojson='geojson', defaults="defaults", watch-markers="true")
+		//- leaflet(lf-center='center', url-hash-center="yes", width='100%', height='100%', geojson='geojson', markers='markers')
