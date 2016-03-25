@@ -2,13 +2,13 @@ extends layout
 
 block content
   // Sidebars
-  div.sidebar.sidebar-left(ng-include="'sidebarLeft'", ui-track-as-search-param='true')
+  //- div.sidebar.sidebar-left(ng-include="'sidebarLeft'", ui-track-as-search-param='true')
   div.sidebar.sidebar-right(ng-include="'sidebarRight'")
   div.app(ui-swipe-right='Ui.turnOn("uiSidebarLeft")', ui-swipe-left='Ui.turnOff("uiSidebarLeft")')
     // Navbars
     div.navbar.navbar-app.navbar-absolute-top
       div.navbar-brand.navbar-brand-center(ui-yield-to='title')
-        | Map
+        | MAD
       div.btn-group.pull-left
         div.btn.sidebar-toggle(ui-toggle='uiSidebarLeft')
           i.fa.fa-bars
@@ -16,7 +16,7 @@ block content
       div.btn-group.pull-right(ui-yield-to='navbarAction')
         div.btn(ui-toggle='uiSidebarRight')
           i.fa.fa-comment
-          |  Point of Interests
+          |  Direction to POI
     div.navbar.navbar-app.navbar-absolute-bottom
       div.btn-group.justified
         a.btn.btn-navbar(href='https://openisdm.iis.sinica.edu.tw/')

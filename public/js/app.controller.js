@@ -5,12 +5,23 @@
     .module('MAD')
     .controller('MainController', MainController);
 
-  function MainController($rootScope, $scope, $location, GetJson) {
+  function MainController($rootScope, $scope, $location, $http, leafletData) {
     // Center Map and Zoom
     angular.extend($scope, {
       center: {
         autoDiscover: true,
-        zoom: 14
+        zoom: 11
+      },
+      markers: {},
+      layers: {
+        baselayers: {
+          osm: {
+            name: 'OpenStreetMap',
+            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            type: 'xyz'
+          },
+        },
+        overlays: {}
       },
       defaults: {
         scrollWheelZoom: false,
@@ -18,30 +29,57 @@
       }
     });
 
-    $scope.moveToMarker = function(index) {
-      var coordinates = $rootScope.geojson.data.features[index].geometry.coordinates;
-      var centerHash = coordinates[1] + ":" + coordinates[0] + ":15";
-
-      $location.search({
-        c: centerHash
+    $http.get('/api/poi').success(function(data, status) {
+      angular.extend($scope.layers.overlays, {
+        pois: {
+          name: 'Shelter',
+          type: 'geoJSONAwesomeMarker',
+          data: data,
+          visible: true,
+          icon: {
+            icon: 'medkit',
+            markerColor: 'green',
+            prefix: 'fa',
+            iconColor: 'white'
+          }
+        }
       });
-
-    };
-
-    // 'Scroll' screen
-    $rootScope.$on('$GET_JSON_SUCCESS', function() {
-      var scrollItems = [];
-      var itemCounts = $rootScope.geojson.data.features.length;
-
-      for (var index in $rootScope.geojson.data.features) {
-        scrollItems.push($rootScope.geojson.data.features[index].properties.name);
-      }
-      $scope.scrollItems = scrollItems;
     });
 
-    $scope.bottomReached = function() {
-      /* global alert: false; */
-      alert('Congrats you scrolled to the end of the list!');
+    $scope.$on('leafletDirectiveMap.locationfound', function(event, args) {
+      $scope.markers['userLocation'] = {
+        lat: args.leafletEvent.latlng.lat,
+        lng: args.leafletEvent.latlng.lng,
+        focus: true,
+        draggable: true,
+        message: 'Here you are!',
+          icon: {
+            type: 'awesomeMarker',
+            iconColor: 'white',
+            icon: 'star',
+            markerColor: 'blue',
+            spin: true,
+            prefix: 'fa'
+          }
+      };
+      leafletData.getMap().then(function(map) {
+        console.log('lealetData.getMap()');
+        $scope.routingControl = L.Routing.control({
+          waypoints: [],
+          createMarker: function() { return null; },
+          routeWhileDragging: true
+        }).addTo(map);
+      });
+    });
+
+    $scope.moveToMarker = function(index) {
+      var coordinates = $rootScope.data.features[index].geometry.coordinates;
+      var centerHash = coordinates[1] + ":" + coordinates[0] + ":15";
+
+      $scope.routingControl.getPlan().setWaypoints([
+        L.latLng($scope.markers['userLocation'].lat, $scope.markers['userLocation'].lng),
+        L.latLng(coordinates[1], coordinates[0])
+      ]);
     };
   }
 
