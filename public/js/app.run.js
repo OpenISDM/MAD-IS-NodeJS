@@ -10,8 +10,8 @@
     var onSuccess = function(response) {
       var data = response.data;
 
-      var aicon = {
-        icon: 'heart',
+      var icon = {
+        icon: 'medkit',
         markerColor: 'red',
         prefix: 'fa',
         iconColor: 'white'
@@ -29,7 +29,7 @@
           },
           pointToLayer: function(feature, latlng) {
             var marker = new L.marker(latlng, {
-              icon: L.AwesomeMarkers.icon(aicon)
+              icon: L.AwesomeMarkers.icon(icon)
             });
             return marker;
           }

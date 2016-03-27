@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   function MainController($rootScope, $scope, $location, $http, leafletData) {
-    // Center Map and Zoom
+
     angular.extend($scope, {
       center: {
         autoDiscover: true,
@@ -45,6 +45,7 @@
           prefix: 'fa'
         }
       };
+
       leafletData.getMap().then(function(map) {
         console.log('lealetData.getMap()');
         $scope.routingControl = L.Routing.control({
@@ -52,15 +53,14 @@
           createMarker: function() {
             return null;
           },
-          routeWhileDragging: true
+          routeWhileDragging: true,
+          fitSelectedRoutes: 'fit'
         }).addTo(map);
       });
     });
 
     $scope.moveToMarker = function(index) {
       var coordinates = $rootScope.geojson.data.features[index].geometry.coordinates;
-      // var centerHash = coordinates[1] + ":" + coordinates[0] + ":15";
-
       $scope.routingControl.getPlan().setWaypoints([
         L.latLng($scope.markers['userLocation'].lat, $scope.markers['userLocation'].lng),
         L.latLng(coordinates[1], coordinates[0])
