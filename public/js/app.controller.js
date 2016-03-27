@@ -29,23 +29,6 @@
       }
     });
 
-    $http.get('/api/poi').success(function(data, status) {
-      angular.extend($scope.layers.overlays, {
-        pois: {
-          name: 'Shelter',
-          type: 'geoJSONAwesomeMarker',
-          data: data,
-          visible: true,
-          icon: {
-            icon: 'medkit',
-            markerColor: 'green',
-            prefix: 'fa',
-            iconColor: 'white'
-          }
-        }
-      });
-    });
-
     $scope.$on('leafletDirectiveMap.locationfound', function(event, args) {
       $scope.markers['userLocation'] = {
         lat: args.leafletEvent.latlng.lat,
@@ -53,28 +36,30 @@
         focus: true,
         draggable: true,
         message: 'Here you are!',
-          icon: {
-            type: 'awesomeMarker',
-            iconColor: 'white',
-            icon: 'star',
-            markerColor: 'blue',
-            spin: true,
-            prefix: 'fa'
-          }
+        icon: {
+          type: 'awesomeMarker',
+          iconColor: 'white',
+          icon: 'star',
+          markerColor: 'blue',
+          spin: true,
+          prefix: 'fa'
+        }
       };
       leafletData.getMap().then(function(map) {
         console.log('lealetData.getMap()');
         $scope.routingControl = L.Routing.control({
           waypoints: [],
-          createMarker: function() { return null; },
+          createMarker: function() {
+            return null;
+          },
           routeWhileDragging: true
         }).addTo(map);
       });
     });
 
     $scope.moveToMarker = function(index) {
-      var coordinates = $rootScope.data.features[index].geometry.coordinates;
-      var centerHash = coordinates[1] + ":" + coordinates[0] + ":15";
+      var coordinates = $rootScope.geojson.data.features[index].geometry.coordinates;
+      // var centerHash = coordinates[1] + ":" + coordinates[0] + ":15";
 
       $scope.routingControl.getPlan().setWaypoints([
         L.latLng($scope.markers['userLocation'].lat, $scope.markers['userLocation'].lng),

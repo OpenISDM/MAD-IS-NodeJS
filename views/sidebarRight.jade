@@ -4,7 +4,9 @@ block content
 	.scrollable
 		.scrollable-content
 			.list-group(ui-toggle='uiSidebarRight')
-				a.list-group-item.media(ng-repeat='item in data.features', ng-click="moveToMarker($index)")
+				a.list-group-item.media(
+					ng-repeat='item in geojson.data.features', 
+					ng-click="moveToMarker($index)")
 					.pull-left
 						i.fa.fa-user.chat-user-avatar
 					.media-body

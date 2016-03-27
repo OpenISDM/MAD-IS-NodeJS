@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Mobile Assistant for Disaster' });
 });
 
-/* GET home page. */
+/* GET other pages in views folder. */
 router.get('/:name', function(req, res, next) {
   var name = req.params.name;
   res.render(name);

@@ -10,10 +10,6 @@
       templateUrl: 'map',
       reloadOnSearch: false
     });
-    $routeProvider.when('/scroll', {
-      templateUrl: 'scroll',
-      reloadOnSearch: false
-    });
   }
 
 })();
