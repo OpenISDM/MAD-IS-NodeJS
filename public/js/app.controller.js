@@ -10,7 +10,7 @@
     angular.extend($scope, {
       center: {
         autoDiscover: true,
-        zoom: 11
+        zoom: 12
       },
       markers: {},
       layers: {
@@ -29,7 +29,29 @@
       }
     });
 
+    $http({
+      url: 'api/poi/proximity',
+      method: "GET",
+      params: {
+        lat: 25.1291,
+        lng: 121.5762,
+        dist: 6
+      }
+    }).success(function(data, status) {
+      for (var index in data) {
+        $scope.markers[data[index].key] = {
+          lat: data[index].latitude,
+          lng: data[index].longitude,
+          focus: true,
+          draggable: true,
+          message: data[index].key
+        }
+      }
+      console.log($scope.markers);
+    });
+
     $scope.$on('leafletDirectiveMap.locationfound', function(event, args) {
+      console.log('leafletDirectiveMap.locationfound');
       $scope.markers['userLocation'] = {
         lat: args.leafletEvent.latlng.lat,
         lng: args.leafletEvent.latlng.lng,
@@ -45,6 +67,7 @@
           prefix: 'fa'
         }
       };
+      console.log(args.leafletEvent.latlng.lat);
 
       leafletData.getMap().then(function(map) {
         console.log('lealetData.getMap()');
