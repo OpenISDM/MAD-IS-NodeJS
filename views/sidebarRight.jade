@@ -5,12 +5,12 @@ block content
 		.scrollable-content
 			.list-group(ui-toggle='uiSidebarRight')
 				a.list-group-item.media(
-					ng-repeat='item in geojson.data.features', 
-					ng-click="moveToMarker($index)")
+					ng-repeat='item in markers', 
+					ng-click="moveToMarker(item.message)")
 					.pull-left
 						i.fa.fa-user.chat-user-avatar
 					.media-body
-						h5.media-heading {{item.properties.name}}
+						h5.media-heading {{item.message}}
 						small(ng-switch='', on='user.online')
 							span(ng-switch-when='true')
 								span.label.label-success {{item.properties.address}}

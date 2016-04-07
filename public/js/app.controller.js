@@ -47,7 +47,6 @@
           message: data[index].key
         }
       }
-      console.log($scope.markers);
     });
 
     $scope.$on('leafletDirectiveMap.locationfound', function(event, args) {
@@ -82,11 +81,11 @@
       });
     });
 
-    $scope.moveToMarker = function(index) {
-      var coordinates = $rootScope.geojson.data.features[index].geometry.coordinates;
+    $scope.moveToMarker = function(key) {
+      var coordinates = $scope.markers[key];
       $scope.routingControl.getPlan().setWaypoints([
         L.latLng($scope.markers['userLocation'].lat, $scope.markers['userLocation'].lng),
-        L.latLng(coordinates[1], coordinates[0])
+        L.latLng(coordinates.lat, coordinates.lng)
       ]);
     };
   }
