@@ -1,10 +1,12 @@
 extends layout
 
 block content
-  // Sidebars
-  div.sidebar.sidebar-left(
-    ng-include="'sidebarLeft'", 
-    ui-track-as-search-param='true')
+
+  // Sidebars  
+  //- div.sidebar.sidebar-left(
+  //-   ng-include="'sidebarLeft'", 
+  //-   ui-track-as-search-param='true')
+  
   div.sidebar.sidebar-right(ng-include="'sidebarRight'")
   div.app(
     ui-swipe-right='Ui.turnOn("uiSidebarLeft")', 

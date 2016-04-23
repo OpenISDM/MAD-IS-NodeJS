@@ -56,7 +56,7 @@ router.get('/poi/proximity/', function(req, res) {
       withDistances: true, // Will provide distance from query, default false
       order: true, // or 'DESC' or true (same as 'ASC'), default false
       units: 'km', // or 'km', 'mi', 'ft', default 'm'
-      count: 1000, // Number of results to return, default undefined
+      count: 50, // Number of results to return, default undefined
       accurate: true // Useful if in emulated mode and accuracy is important, default false
     }
 
