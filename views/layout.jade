@@ -17,23 +17,26 @@ html(ng-app="MAD")
 		link(rel='stylesheet', href='/bower_components/leaflet-routing-machine/dist/leaflet-routing-machine.css')
 		link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
 		link(rel='stylesheet', href='/bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css')
-		
+		link(rel='stylesheet', href='/bower_components/ngprogress/ngProgress.css')
+
 		link(rel='stylesheet', href='/css/app.css')
 
 	body(ng-controller="MainController",ui-prevent-touchmove-defaults)
 		block content
-		
+
 		script(src='/bower_components/angular/angular.min.js')
 		script(src='/bower_components/angular-route/angular-route.min.js')
-		
+
 		script(src='/bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.min.js')
 		script(src='/bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.gestures.min.js')
-		
+
 		script(src='/bower_components/leaflet/dist/leaflet.js')
 		script(src='/bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js')
 		script(src='/bower_components/leaflet-routing-machine/dist/leaflet-routing-machine.js')
 		script(src='/bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.min.js')
-		
+
+		script(src='/bower_components/ngprogress/build/ngprogress.min.js')
+
 		script(src='/js/app.module.js')
 		script(src='/js/app.config.js')
 		script(src='/js/app.service.js')

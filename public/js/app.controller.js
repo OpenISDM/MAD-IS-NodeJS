@@ -5,7 +5,10 @@
     .module('MAD')
     .controller('MainController', MainController);
 
-  function MainController($rootScope, $scope, $location, $http, leafletData) {
+  function MainController($rootScope, $scope, $location, $http, leafletData, ngProgressFactory) {
+    $scope.progressbar = ngProgressFactory.createInstance();
+    $scope.progressbar.start();
+    $scope.progressbar.setColor('#007aff');
 
     angular.extend($scope, {
       center: {
@@ -19,7 +22,7 @@
             name: 'OpenStreetMap',
             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             type: 'xyz'
-          },
+          }
         },
         overlays: {}
       },
@@ -84,6 +87,8 @@
         fitSelectedRoutes: 'fit'
       }).addTo(map);
       // $scope.routingControl.hide();
+      //
+      $scope.progressbar.complete();
     });
 
     $scope.moveToMarker = function(key) {
