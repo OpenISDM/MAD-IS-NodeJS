@@ -35,3 +35,6 @@ npm-debug.log
 
 # Database
 config.js
+
+# Mac file
+.DS_Store
